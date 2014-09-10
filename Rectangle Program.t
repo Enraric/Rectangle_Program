@@ -99,6 +99,9 @@ end rectGen
 
 %Adding a Rectangle%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc addRect
+    var proofString : string
+    var exitvar : array 1 .. 4 of boolean
+    
     if numRects < 25 then
     for i : 1 .. 25
         if rects(i).name = "0" then
@@ -139,6 +142,21 @@ proc addRect
                     exit
                 end if
             end loop
+            put "Enter name of new rectangle. If entered string is greater than four characters, the first four characters will be used."
+            loop
+                get proofString
+                for j : 1 .. 4
+                    if ord(proofString (i)) > 122 or ord(proofString (i)) < 97 then
+                        put "Invalid name; all characters must be lower case letters."
+                    else
+                        exitvar(j) := true
+                    end if
+                end for
+                exit when exitvar(1) = true and exitvar(2) = true and exitvar(3) = true and exitvar(4) = true
+            end loop
+            for j : 1 .. 4    
+                rects(i).name (j) := proofString (j)
+            end for
             exit
         end if
     end for
