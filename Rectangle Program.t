@@ -1,3 +1,14 @@
+type point : record4
+    x : int
+    y : int
+end record
+
+type rectangle : record
+    bl : point type
+    tr : point type
+    name : string (4)  
+end record
+
 proc rectGen
     
 end rectGen
