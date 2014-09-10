@@ -14,6 +14,15 @@ var rects : array 1 .. 25 of rectangle
 var numRects : int
 
 
+%Initializing stuff because it makes my life easier%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+for i : 1 .. 25
+    rects (i).bl.x := 1000
+    rects (i).bl.y := 1000
+    rects (i).tr.x := 1000
+    rects (i).tr.y := 1000
+    rects (i).name := "0"
+end for
+
 
 %Putting rectangles to the screen%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc putRect
@@ -87,7 +96,48 @@ proc rectGen
 end rectGen
 
 proc addRect
-
+    for i : 1 .. 25
+        if rects(i).name = "0" then
+            numRects += 1
+            loop
+                put "Enter x vlaue for lower left:"..
+                get rects (i).bl.x
+                if rects (i).bl.x > 800 then
+                    put "Value not valid."..
+                else
+                    exit
+                end if
+            end loop
+            loop
+                put "Enter y vlaue for lower left:"..
+                get rects (i).bl.y
+                if rects (i).bl.y > 600 then
+                    put "Value not valid."..
+                else
+                    exit
+                end if
+            end loop
+            loop
+                put "Enter x vlaue for top right:"..
+                get rects (i).tr.x
+                if rects (i).tr.x > 800 or rects (i).tr.x < rects (i).bl.x then
+                    put "Value not valid."..
+                else
+                    exit
+                end if
+            end loop
+            loop
+                put "Enter y vlaue for top right:"..
+                get rects (i).tr.y
+                if rects (i).tr.y > 800 or rects (i).tr.y < rects (i).bl.y then
+                    put "Value not valid."..
+                else
+                    exit
+                end if
+            end loop
+            exit
+        end if
+    end for
 end addRect
 
 proc delRect
