@@ -95,7 +95,11 @@ proc rectGen
     end if
 end rectGen
 
+
+
+%Adding a Rectangle%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc addRect
+    if numRects < 25 then
     for i : 1 .. 25
         if rects(i).name = "0" then
             numRects += 1
@@ -103,7 +107,7 @@ proc addRect
                 put "Enter x vlaue for lower left:"..
                 get rects (i).bl.x
                 if rects (i).bl.x > 800 then
-                    put "Value not valid."..
+                    put "Value not valid. "..
                 else
                     exit
                 end if
@@ -112,7 +116,7 @@ proc addRect
                 put "Enter y vlaue for lower left:"..
                 get rects (i).bl.y
                 if rects (i).bl.y > 600 then
-                    put "Value not valid."..
+                    put "Value not valid. "..
                 else
                     exit
                 end if
@@ -121,7 +125,7 @@ proc addRect
                 put "Enter x vlaue for top right:"..
                 get rects (i).tr.x
                 if rects (i).tr.x > 800 or rects (i).tr.x < rects (i).bl.x then
-                    put "Value not valid."..
+                    put "Value not valid. "..
                 else
                     exit
                 end if
@@ -130,7 +134,7 @@ proc addRect
                 put "Enter y vlaue for top right:"..
                 get rects (i).tr.y
                 if rects (i).tr.y > 800 or rects (i).tr.y < rects (i).bl.y then
-                    put "Value not valid."..
+                    put "Value not valid. "..
                 else
                     exit
                 end if
@@ -138,6 +142,10 @@ proc addRect
             exit
         end if
     end for
+    else
+        put "Maximum number of rectangles already exist."
+        delay (3000)
+    end if
 end addRect
 
 proc delRect
@@ -160,7 +168,7 @@ proc PtinRect
 
 end PtinRect
 
-proc mainProgram
+proc mainProgram 
     var userIn : int
     rectGen
     loop
@@ -183,7 +191,7 @@ proc mainProgram
             label 5 : aSort
             label 6 : PtinRect
             label 7 : exit
-            label : put "Not a valid option"
+            label : put "Not a valid option. "
         end case
     end loop
 end mainProgram
