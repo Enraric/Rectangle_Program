@@ -190,7 +190,8 @@ proc PtinRect
 
 end PtinRect
 
-proc mainProgram 
+proc mainProgram
+    setscreen ("graphics:600;600")
     var userIn : int
     rectGen
     loop
