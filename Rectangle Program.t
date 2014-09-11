@@ -146,7 +146,7 @@ proc addRect
             loop
                 get proofString
                 for j : 1 .. 4
-                    if ord(proofString (i)) > 122 or ord(proofString (i)) < 97 then
+                    if ord(proofString (j)) > 122 or ord(proofString (j)) < 97 then
                         put "Invalid name; all characters must be lower case letters."
                     else
                         exitvar(j) := true
@@ -155,7 +155,11 @@ proc addRect
                 exit when exitvar(1) = true and exitvar(2) = true and exitvar(3) = true and exitvar(4) = true
             end loop
             for j : 1 .. 4    
-                rects(i).name (j) := proofString (j)
+                if j = 1 then
+                    rects (i).name := proofString (j)
+                else
+                    rects (i).name += proofString (j)
+                end if
             end for
             exit
         end if
