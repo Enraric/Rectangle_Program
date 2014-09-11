@@ -14,7 +14,7 @@ var rects : array 1 .. 25 of rectangle
 var numRects : int
 
 
-%Initializing stuff because it makes my life easier%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Initializing stuff because it makes my life easier%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i : 1 .. 25
     rects (i).bl.x := 1000
     rects (i).bl.y := 1000
@@ -171,7 +171,33 @@ proc addRect
 end addRect
 
 proc delRect
-
+    var badRect : string (4)
+    var tempRect : rectangle
+    var valid : boolean := false
+    put "Which rectangle would you like to delete?"
+    get badRect
+    for i : 1 .. numRects
+        if rects(i).name = badRect then
+            rects (i).bl.x := 1000
+            rects (i).bl.y := 1000
+            rects (i).tr.x := 1000
+            rects (i).tr.y := 1000
+            rects (i).name := "0"
+            numRects -= 1
+            valid := true
+        end if
+        if rects(i+1).name not= "0" and i not= 25 and valid then
+           tempRect := rects(i+1)
+           rects(i+1) := rects(i)
+           rects(i) := tempRect
+        elsif valid and rects(i+1).name = "0" or valid and i = 25 then
+            exit
+        else
+            put "Name not valid"
+            delay(3000)
+            exit
+        end if
+    end for
 end delRect
 
 proc rectIn
