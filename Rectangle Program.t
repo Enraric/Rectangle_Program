@@ -11,7 +11,7 @@ end record
 
 var rects : array 1 .. 25 of rectangle
 
-var numRects : int
+var numRects : int := 0
 
 
 %Initializing stuff because it makes my life easier%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,7 +26,7 @@ end for
 
 %Putting rectangles to the screen%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc putRect
-    %cls
+    cls
     for i : 1 .. numRects
         put intstr(i) + ")  " + intstr(rects (i).bl.x) + "," + intstr(rects (i).bl.y) + "  " + intstr(rects (i).tr.x) + "," + intstr(rects (i).tr.y) + "  " + rects (i).name
     end for
@@ -223,11 +223,14 @@ end rectUn
 proc aSort
     var tempRect : rectangle
     for q : 1 .. numRects
+    %put "q=" + intstr (q)
         for i : 1 .. (numRects - 1)
+        %put "i=" + intstr (i)
             if rects(i).name > rects(i+1).name then
                 tempRect := rects(i+1)
                 rects(i+1) := rects(i)
                 rects(i) := tempRect
+            %put rects(i).name + " switched with " + rects(i+1).name
             else
                 exit
             end if
@@ -269,27 +272,28 @@ end PtinRect
 proc mainProgram
     setscreen ("graphics:6000;6000")
     var userIn : int
-    rectGen
     loop
     putRect
         put ""
         put "What would you like to do?"
-        put "1) Add New Rectangle"
-        put "2) Delete a Rectangle"
-        put "3) Find Intersection"
-        put "4) Find Union"
-        put "5) Sort by Name"
-        put "6) Find a Point in a Rectangle"
-        put "7) Quit"
+        put "1) Generate Rectangles"
+        put "2) Add New Rectangle"
+        put "3) Delete a Rectangle"
+        put "4) Find Intersection"
+        put "5) Find Union"
+        put "6) Sort by Name"
+        put "7) Find a Point in a Rectangle"
+        put "8) Quit"
         get userIn
         case userIn of
-            label 1 : addRect
-            label 2 : delRect
-            label 3 : rectIn
-            label 4 : rectUn
-            label 5 : aSort
-            label 6 : PtinRect
-            label 7 : exit
+            label 1 : rectGen
+            label 2 : addRect
+            label 3 : delRect
+            label 4 : rectIn
+            label 5 : rectUn
+            label 6 : aSort
+            label 7 : PtinRect
+            label 8 : exit
             label : put "Not a valid option. "
         end case
     end loop
