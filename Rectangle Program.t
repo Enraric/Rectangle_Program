@@ -170,6 +170,9 @@ proc addRect
     end if
 end addRect
 
+
+
+%Rectangle Delete Function%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc delRect
     var badRect : string (4)
     var tempRect : rectangle
@@ -186,34 +189,81 @@ proc delRect
             numRects -= 1
             valid := true
         end if
-        if rects(i+1).name not= "0" and i not= 25 and valid then
+        if i not= 25 and rects(i+1).name not= "0" and valid then
            tempRect := rects(i+1)
            rects(i+1) := rects(i)
            rects(i) := tempRect
-        elsif valid and rects(i+1).name = "0" or valid and i = 25 then
-            exit
-        else
-            put "Name not valid"
-            delay(3000)
+        elsif valid and i = 25 or valid and rects(i+1).name = "0" then 
             exit
         end if
     end for
+    if not valid then
+        put "Name not valid"
+        delay(3000)
+    end if
 end delRect
 
+
+
+%Rectangle Intersection Checker%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc rectIn
 
 end rectIn
 
+
+
+%Rectangle Unity Creator%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc rectUn
 
 end rectUn
 
-proc aSort
 
+
+%Alphabetical Sorting%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+proc aSort
+    var tempRect : rectangle
+    for q : 1 .. numRects
+        for i : 1 .. (numRects - 1)
+            if rects(i).name > rects(i+1).name then
+                tempRect := rects(i+1)
+                rects(i+1) := rects(i)
+                rects(i) := tempRect
+            else
+                exit
+            end if
+        end for
+    end for
 end aSort
 
-proc PtinRect
 
+
+%Point in Rectangle%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+proc PtinRect
+    var usedRect : rectangle
+    var usedRectName : string
+    var usedPoint : point
+    put "What rectangle would you like to use? "..
+    get usedRectName
+    for i : 1 .. numRects
+        if usedRectName = rects(i).name then
+            usedRect := rects(i)
+        end if
+    end for
+    put "What x coordinate would you like to use? "..
+    get usedPoint.x
+    put "What y coordinate would you like to use? "..
+    get usedPoint.y
+    if usedPoint.x < usedRect.bl.x then
+        put "Point is not in rectangle."
+    elsif usedPoint.y < usedRect.bl.y then
+        put "Point is not in rectangle."
+    elsif usedPoint.x > usedRect.tr.x then
+        put "Point is not in rectangle."
+    elsif usedPoint.y > usedRect.tr.y then
+        put "Point is not in rectangle."
+    else
+        put "Point is in rectangle."
+    end if
 end PtinRect
 
 proc mainProgram
