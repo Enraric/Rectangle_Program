@@ -26,7 +26,7 @@ end for
 
 %Putting rectangles to the screen%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc putRect
-    cls
+    %cls
     for i : 1 .. numRects
         put intstr(i) + ")  " + intstr(rects (i).bl.x) + "," + intstr(rects (i).bl.y) + "  " + intstr(rects (i).tr.x) + "," + intstr(rects (i).tr.y) + "  " + rects (i).name
     end for
@@ -223,11 +223,14 @@ end rectUn
 proc aSort
     var tempRect : rectangle
     for q : 1 .. numRects
+    put "q=" + intstr (q)
         for i : 1 .. (numRects - 1)
+        put "i=" + intstr (i)
             if rects(i).name > rects(i+1).name then
                 tempRect := rects(i+1)
                 rects(i+1) := rects(i)
                 rects(i) := tempRect
+            put rects(i).name + " switched with " + rects(i+1).name
             else
                 exit
             end if
@@ -267,7 +270,7 @@ proc PtinRect
 end PtinRect
 
 proc mainProgram
-    setscreen ("graphics:600;600")
+    setscreen ("graphics:6000;6000")
     var userIn : int
     rectGen
     loop
