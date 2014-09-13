@@ -36,6 +36,16 @@ end putRect
 
 %Generating Rectangles%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc rectGen
+
+    %Resetting the array
+    for i : 1 .. 25
+        rects (i).bl.x := 1000
+        rects (i).bl.y := 1000
+        rects (i).tr.x := 1000
+        rects (i).tr.y := 1000
+        rects (i).name := "0"
+    end for
+
     %Getting the desired number of rectangles from the user
     var tempChar : char
     loop
@@ -231,11 +241,13 @@ proc aSort
                 rects(i+1) := rects(i)
                 rects(i) := tempRect
             %put rects(i).name + " switched with " + rects(i+1).name
-            else
-                exit
             end if
         end for
     end for
+    /*
+    loop
+    end loop
+    */
 end aSort
 
 
@@ -269,6 +281,9 @@ proc PtinRect
     end if
 end PtinRect
 
+
+
+%The Main Program%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc mainProgram
     setscreen ("graphics:6000;6000")
     var userIn : int
