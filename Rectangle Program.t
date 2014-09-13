@@ -117,7 +117,8 @@ proc addRect
         if rects(i).name = "0" then
             numRects += 1
             loop
-                put "Enter x vlaue for lower left:"..
+            %Obtaining and checking point values
+                put "Enter x vlaue for lower left:".. 
                 get rects (i).bl.x
                 if rects (i).bl.x > 800 then
                     put "Value not valid. "..
@@ -152,6 +153,8 @@ proc addRect
                     exit
                 end if
             end loop
+            
+            %Obtaining and checking desired name
             put "Enter name of new rectangle. If entered string is greater than four characters, the first four characters will be used."
             loop
                 get proofString
@@ -187,29 +190,39 @@ proc delRect
     var badRect : string (4)
     var tempRect : rectangle
     var valid : boolean := false
-    put "Which rectangle would you like to delete?"
-    get badRect
-    for i : 1 .. numRects
-        if rects(i).name = badRect then
-            rects (i).bl.x := 1000
-            rects (i).bl.y := 1000
-            rects (i).tr.x := 1000
-            rects (i).tr.y := 1000
-            rects (i).name := "0"
-            numRects -= 1
-            valid := true
+    if numRects > 0 then
+        put "Which rectangle would you like to delete?"
+        get badRect
+        
+        %Resetting rectangle values
+        for i : 1 .. numRects
+            if rects(i).name = badRect then
+                rects (i).bl.x := 1000
+                rects (i).bl.y := 1000
+                rects (i).tr.x := 1000
+                rects (i).tr.y := 1000
+                rects (i).name := "0"
+                numRects -= 1
+                valid := true
+            end if
+            
+            %Moving deleted rectangle to end of array
+            if i not= 25 and rects(i+1).name not= "0" and valid then
+                tempRect := rects(i+1)
+                rects(i+1) := rects(i)
+                rects(i) := tempRect
+            elsif valid and i = 25 or valid and rects(i+1).name = "0" then 
+                exit
+            end if
+        end for
+        if not valid then
+            put "Name not valid"
+            delay(5000)
         end if
-        if i not= 25 and rects(i+1).name not= "0" and valid then
-           tempRect := rects(i+1)
-           rects(i+1) := rects(i)
-           rects(i) := tempRect
-        elsif valid and i = 25 or valid and rects(i+1).name = "0" then 
-            exit
-        end if
-    end for
-    if not valid then
-        put "Name not valid"
-        delay(5000)
+        
+    else
+        put "No rectangles stored."
+        delay (5000)
     end if
 end delRect
 
@@ -227,52 +240,60 @@ proc rectUn
     var rect1 : rectangle
     var rect2 : rectangle
     var bigRect : rectangle
-    put "Enter the name of the first rectangle: "..
-    get rect1.name
-    put "Enter the name of the second rectangle: "..
-    get rect2.name
     
-    for i : 1 .. numRects
-        if rects(i).name = rect1.name then
-            rect1 := rects(i)
+    if numRects > 0 then
+        put "Enter the name of the first rectangle: "..
+        get rect1.name
+        put "Enter the name of the second rectangle: "..
+        get rect2.name
+    
+        %Obtaining rectangle data from the array
+        for i : 1 .. numRects
+            if rects(i).name = rect1.name then
+                rect1 := rects(i)
+            end if
+        end for
+        for i : 1 .. numRects
+            if rects(i).name = rect2.name then
+                rect2 := rects(i)
+            end if
+        end for
+    
+        %Finding botom left x value of union
+        if rect1.bl.x > rect2.bl.x then
+            bigRect.bl.x := rect2.bl.x
+        else
+            bigRect.bl.x := rect1.bl.x
         end if
-    end for
-    for i : 1 .. numRects
-        if rects(i).name = rect2.name then
-            rect2 := rects(i)
+    
+        %Finding botom left y value of union
+        if rect1.bl.y > rect2.bl.y then
+            bigRect.bl.y := rect2.bl.y
+        else
+            bigRect.bl.y := rect1.bl.y
         end if
-    end for
     
-    %Finding botom left x value of union
-    if rect1.bl.x > rect2.bl.x then
-        bigRect.bl.x := rect2.bl.x
+        %Finding top right x value of union
+        if rect1.tr.x < rect2.tr.x then
+            bigRect.tr.x := rect2.tr.x
+        else
+            bigRect.tr.x := rect1.tr.x
+        end if
+    
+        %Finding top right y value of union
+        if rect1.tr.y < rect2.tr.y then
+            bigRect.tr.y := rect2.tr.y
+        else
+            bigRect.tr.y := rect1.tr.y
+        end if
+    
+        put "The union rectangle is defined by points Bottom Left at (" + intstr(bigRect.bl.x) + ", " + intstr(bigRect.bl.y) + ") and Top Right at ("+ intstr(bigRect.tr.x) + ", " + intstr(bigRect.tr.y) + ")."
+        delay (5000)
+    
     else
-        bigRect.bl.x := rect1.bl.x
+        put "No rectangles stored."
+        delay (5000)
     end if
-    
-    %Finding botom left y value of union
-    if rect1.bl.y > rect2.bl.y then
-        bigRect.bl.y := rect2.bl.y
-    else
-        bigRect.bl.y := rect1.bl.y
-    end if
-    
-    %Finding top right x value of union
-    if rect1.tr.x < rect2.tr.x then
-        bigRect.tr.x := rect2.tr.x
-    else
-        bigRect.tr.x := rect1.tr.x
-    end if
-    
-    %Finding top right y value of union
-    if rect1.tr.y < rect2.tr.y then
-        bigRect.tr.y := rect2.tr.y
-    else
-        bigRect.tr.y := rect1.tr.y
-    end if
-    
-    put "The union rectangle is defined by points Bottom Left at (" + intstr(bigRect.bl.x) + ", " + intstr(bigRect.bl.y) + ") and Top Right at ("+ intstr(bigRect.tr.x) + ", " + intstr(bigRect.tr.y) + ")."
-    delay (5000)
     
 end rectUn
 
@@ -299,27 +320,37 @@ proc PtinRect
     var usedRect : rectangle
     var usedRectName : string
     var usedPoint : point
-    put "What rectangle would you like to use? "..
-    get usedRectName
-    for i : 1 .. numRects
-        if usedRectName = rects(i).name then
-            usedRect := rects(i)
+    if numRects > 0 then
+        put "What rectangle would you like to use? "..
+        get usedRectName
+        for i : 1 .. numRects
+            if usedRectName = rects(i).name then
+                usedRect := rects(i)
+            end if
+        end for
+        put "What x coordinate would you like to use? "..
+        get usedPoint.x
+        put "What y coordinate would you like to use? "..
+        get usedPoint.y
+        if usedPoint.x < usedRect.bl.x then
+            put "Point is not in rectangle."
+            delay (5000)
+        elsif usedPoint.y < usedRect.bl.y then
+            put "Point is not in rectangle."
+            delay (5000)
+        elsif usedPoint.x > usedRect.tr.x then
+            put "Point is not in rectangle."
+            delay (5000)
+        elsif usedPoint.y > usedRect.tr.y then
+            put "Point is not in rectangle."
+            delay (5000)
+        else
+            put "Point is in rectangle."
+            delay (5000)
         end if
-    end for
-    put "What x coordinate would you like to use? "..
-    get usedPoint.x
-    put "What y coordinate would you like to use? "..
-    get usedPoint.y
-    if usedPoint.x < usedRect.bl.x then
-        put "Point is not in rectangle."
-    elsif usedPoint.y < usedRect.bl.y then
-        put "Point is not in rectangle."
-    elsif usedPoint.x > usedRect.tr.x then
-        put "Point is not in rectangle."
-    elsif usedPoint.y > usedRect.tr.y then
-        put "Point is not in rectangle."
     else
-        put "Point is in rectangle."
+        put "No rectangles stored."
+        delay (5000)
     end if
 end PtinRect
 
