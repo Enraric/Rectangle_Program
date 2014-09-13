@@ -209,7 +209,7 @@ proc delRect
     end for
     if not valid then
         put "Name not valid"
-        delay(3000)
+        delay(5000)
     end if
 end delRect
 
@@ -224,7 +224,56 @@ end rectIn
 
 %Rectangle Unity Creator%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc rectUn
-
+    var rect1 : rectangle
+    var rect2 : rectangle
+    var bigRect : rectangle
+    put "Enter the name of the first rectangle: "..
+    get rect1.name
+    put "Enter the name of the second rectangle: "..
+    get rect2.name
+    
+    for i : 1 .. numRects
+        if rects(i).name = rect1.name then
+            rect1 := rects(i)
+        end if
+    end for
+    for i : 1 .. numRects
+        if rects(i).name = rect2.name then
+            rect2 := rects(i)
+        end if
+    end for
+    
+    %Finding botom left x value of union
+    if rect1.bl.x > rect2.bl.x then
+        bigRect.bl.x := rect2.bl.x
+    else
+        bigRect.bl.x := rect1.bl.x
+    end if
+    
+    %Finding botom left y value of union
+    if rect1.bl.y > rect2.bl.y then
+        bigRect.bl.y := rect2.bl.y
+    else
+        bigRect.bl.y := rect1.bl.y
+    end if
+    
+    %Finding top right x value of union
+    if rect1.tr.x < rect2.tr.x then
+        bigRect.tr.x := rect2.tr.x
+    else
+        bigRect.tr.x := rect1.tr.x
+    end if
+    
+    %Finding top right y value of union
+    if rect1.tr.y < rect2.tr.y then
+        bigRect.tr.y := rect2.tr.y
+    else
+        bigRect.tr.y := rect1.tr.y
+    end if
+    
+    put "The union rectangle is defined by points Bottom Left at (" + intstr(bigRect.bl.x) + ", " + intstr(bigRect.bl.y) + ") and Top Right at ("+ intstr(bigRect.tr.x) + ", " + intstr(bigRect.tr.y) + ")."
+    delay (5000)
+    
 end rectUn
 
 
@@ -233,21 +282,14 @@ end rectUn
 proc aSort
     var tempRect : rectangle
     for q : 1 .. numRects
-    %put "q=" + intstr (q)
         for i : 1 .. (numRects - 1)
-        %put "i=" + intstr (i)
             if rects(i).name > rects(i+1).name then
                 tempRect := rects(i+1)
                 rects(i+1) := rects(i)
                 rects(i) := tempRect
-            %put rects(i).name + " switched with " + rects(i+1).name
             end if
         end for
     end for
-    /*
-    loop
-    end loop
-    */
 end aSort
 
 
@@ -285,7 +327,7 @@ end PtinRect
 
 %The Main Program%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc mainProgram
-    setscreen ("graphics:6000;6000")
+    setscreen ("graphics:600;600")
     var userIn : int
     loop
     putRect
@@ -314,6 +356,9 @@ proc mainProgram
     end loop
 end mainProgram
 
+
+
+%Run%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mainProgram
 Window.Hide (-1)
 
