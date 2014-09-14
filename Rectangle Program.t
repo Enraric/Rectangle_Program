@@ -230,6 +230,71 @@ end delRect
 
 %Rectangle Intersection Checker%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 proc rectIn
+    var rect1 : rectangle
+    var rect2 : rectangle
+    var section : rectangle
+    var valid : boolean
+
+    if numRects > 0 then
+        put "Enter the name of the first rectangle: "..
+        get rect1.name
+        put "Enter the name of the second rectangle: "..
+        get rect2.name
+    
+        %Obtaining rectangle data from the array
+        for i : 1 .. numRects
+            if rects(i).name = rect1.name then
+                rect1 := rects(i)
+            end if
+        end for
+        for i : 1 .. numRects
+            if rects(i).name = rect2.name then
+                rect2 := rects(i)
+            end if
+        end for
+    
+        %Checking if the intersection exists
+        if rect1.bl.x <= rect2.tr.x and rect1.tr.x >= rect2.bl.x and rect1.bl.y <= rect2.tr.y and rect1.tr.y >= rect2.bl.y then
+            valid := false
+            put "No intersection found."
+            delay (5000)
+        else
+            valid := true
+        end if
+
+        if valid then
+            if rect1.bl.x > rect2.bl.x then
+                section.bl.x := rect1.bl.x
+            else
+                section.bl.x := rect2.bl.x
+            end if
+
+            if rect1.bl.y > rect2.bl.y then
+                section.bl.y := rect1.bl.y
+            else
+                section.bl.y := rect2.bl.y
+            end if
+
+            if rect1.tr.x > rect2.tr.x then
+                section.tr.x := rect1.tr.x
+            else
+                section.tr.x := rect2.tr.x
+            end if
+
+            if rect1.tr.y > rect2.tr.y then
+                section.tr.y := rect1.tr.y
+            else
+                section.tr.y := rect2.tr.y
+            end if
+            
+            put "The intersection rectangle is defined by bottom left point (" + intstr (section.bl.x) + ", " + intstr (section.bl.y) + ") and the top right point (" + intstr (section.tr.x) + ", " + intstr (section.tr.y) + ")."
+                delay (5000)
+        end if
+        
+        else
+            put "No rectangles stored."
+        delay (5000)
+    end if
 
 end rectIn
 
