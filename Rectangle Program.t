@@ -217,12 +217,12 @@ proc delRect
         end for
         if not valid then
             put "Name not valid"
-            delay(5000)
+            delay(3000)
         end if
         
     else
         put "No rectangles stored."
-        delay (5000)
+        delay (3000)
     end if
 end delRect
 
@@ -293,7 +293,7 @@ proc rectIn
         
         else
             put "No rectangles stored."
-        delay (5000)
+        delay (3000)
     end if
 
 end rectIn
@@ -357,7 +357,7 @@ proc rectUn
     
     else
         put "No rectangles stored."
-        delay (5000)
+        delay (3000)
     end if
     
 end rectUn
@@ -399,23 +399,23 @@ proc PtinRect
         get usedPoint.y
         if usedPoint.x < usedRect.bl.x then
             put "Point is not in rectangle."
-            delay (5000)
+            delay (3000)
         elsif usedPoint.y < usedRect.bl.y then
             put "Point is not in rectangle."
-            delay (5000)
+            delay (3000)
         elsif usedPoint.x > usedRect.tr.x then
             put "Point is not in rectangle."
-            delay (5000)
+            delay (3000)
         elsif usedPoint.y > usedRect.tr.y then
             put "Point is not in rectangle."
-            delay (5000)
+            delay (3000)
         else
             put "Point is in rectangle."
-            delay (5000)
+            delay (3000)
         end if
     else
         put "No rectangles stored."
-        delay (5000)
+        delay (3000)
     end if
 end PtinRect
 
